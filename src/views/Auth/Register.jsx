@@ -23,7 +23,6 @@ const Login = () => {
   const [showRePassword, setShowRePassword] = useState(false)
   const [errMessage, setErrMessage] = React.useState('')
   const navigate = useNavigate()
-  const auth = useAuth()
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -58,7 +57,7 @@ const Login = () => {
             if (err.message === 'Network Error' || err.response.status === 500) {
               setErrMessage('Lỗi kết nối máy chủ !')
             } else {
-              setErrMessage('Lỗi: Số điện thoại đã tồn tại')
+              setErrMessage('Lỗi: Số điện thoại hoặc email đã tồn tại')
             }
             setTimeout(() => {
               helpers.setStatus({ success: false })

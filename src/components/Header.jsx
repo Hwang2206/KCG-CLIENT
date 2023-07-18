@@ -144,7 +144,7 @@ function Header() {
               }}
             >
               
-                <img src={logo} alt='logo' width={400} />
+                <img className='hover:cursor-pointer' onClick={() => navigate('/')} src={logo} alt='logo' width={400} />
               
             </Typography>
 

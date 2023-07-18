@@ -8,7 +8,7 @@ import {
   TextField,
   Typography
 } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../assets/logo.png'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useFormik } from 'formik'
@@ -16,8 +16,10 @@ import { loginValidationSchema } from '../../hooks/useValidation'
 import useAuth from '../../hooks/useAuth'
 import { useNavigate, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import PageLoader from '../../components/Loader/PageLoader'
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = React.useState(false)
   const [errMessage, setErrMessage] = React.useState('')
   const navigate = useNavigate()
@@ -35,22 +37,26 @@ const Login = () => {
         auth
           .login(values.phone, values.password)
           .then(() => {
+            setIsLoading(true)
+
             setTimeout(() => {
+              setIsLoading(false)
               navigate('/')
-              Swal.fire({
-                text: 'Đăng nhập thành công',
-                icon: 'success',
-                confirmButtonText: 'Xác nhận'
-              })
-            }, 1000)
+              navigate(0)
+
+              // Swal.fire({
+              //   text: 'Đăng nhập thành công',
+              //   icon: 'success',
+              //   confirmButtonText: 'Xác nhận'
+              // })
+            }, 1500)
           })
           .catch((err) => {
             if (err.message === 'Network Error' || err.response.status === 500) {
               setErrMessage('Lỗi kết nối máy chủ !')
-            } else if(err.response.status === 403) {
+            } else if (err.response.status === 403) {
               setErrMessage('Tài khoản của bạn đã bị vô hiệu hoá')
-            }
-             else {
+            } else {
               setErrMessage('Số điện thoại hoặc mật khẩu không chính xác')
             }
             setTimeout(() => {
@@ -69,6 +75,8 @@ const Login = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault()
   }
+
+  if (isLoading) return <PageLoader />
   return (
     <div style={{ height: '690px' }} className='flex items-center justify-center'>
       <Card sx={{ borderRadius: '0.5rem' }} className='py-10 px-20'>
@@ -124,7 +132,10 @@ const Login = () => {
             </div>
 
             <div className='text-right'>
-              Chưa có tài khoản ? <Link className='text-blue-500 hover:underline hover:text-blue-500' to='/register'>Đăng ký ngay</Link>
+              Chưa có tài khoản ?{' '}
+              <Link className='text-blue-500 hover:underline hover:text-blue-500' to='/register'>
+                Đăng ký ngay
+              </Link>
             </div>
 
             <div className='w-full text-center mt-7'>

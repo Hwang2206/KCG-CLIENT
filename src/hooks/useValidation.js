@@ -16,3 +16,15 @@ export const registerValidationSchema = Yup.object({
     .oneOf([Yup.ref('password'), null], 'Mật khẩu nhập lại không khớp')
     .required('Vui lòng nhập lại mật khẩu')
 })
+
+export const changePasswordValidationSchema = Yup.object({
+  old_password: Yup.string().max(255).required('Vui lòng nhập mật khẩu hiện tại'),
+  password: Yup.string()
+    .max(255)
+    .notOneOf([Yup.ref('old_password')], 'Mật khẩu mới không được trùng với mật khẩu hiện tại')
+    .required('Vui lòng nhập mật khẩu mới')
+    .min(8, 'Mật khẩu phải có độ dài ít nhất 8 kí tự'),
+  repassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Mật khẩu nhập lại không khớp')
+    .required('Vui lòng nhập lại mật khẩu')
+})

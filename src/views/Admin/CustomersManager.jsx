@@ -43,6 +43,8 @@ const CustomersManager = () => {
         confirmText: 'Lưu',
         handleConfirmed: () => {
           setShowLoader(true)
+          console.log(id)
+          console.log(data)
           CustomerServices.updateByID(values.id, data)
             .then(() => {
               setTimeout(() => {
