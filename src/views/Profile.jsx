@@ -15,17 +15,20 @@ const Profile = () => {
   const { user } = useContext(JWTContext)
   const navigate = useNavigate()
   const [showLoader, setShowLoader] = useState(false)
+  const [dataUser, setDataUser] = useState({})
   const [showModalUpdateInfo, setShowModalUpdateInfo] = useState(false)
   const [showModalUpdatePassword, setShowModalUpdatePassword] = useState(false)
   const dataCustomer = {
     id: user?.user_id || 0,
     name: user?.user_name || '',
     phone: user?.user_phone || '',
-    email: user?.user_email || '',
+    email: dataUser.user_email || '',
     password: user?.user_password || '',
     type: user?.user_type || false,
     active: user?.user_active || false
   }
+
+  console.log(dataUser)
 
   const dataPassword = {
     id: user?.user_id || 0,
@@ -125,6 +128,12 @@ const Profile = () => {
     }
   })
 
+  useEffect(() => {
+    CustomerServices.getByID(user.user_id).then((res) => {
+      setDataUser(res.data.data)
+    })
+  }, [])
+
   const style = {
     position: 'absolute',
     top: '25%',
@@ -172,7 +181,7 @@ const Profile = () => {
                       <br />
                       {user.user_phone}
                       <br />
-                      {user.user_email}
+                      {dataUser.user_email}
                       <br />
                       <span className={user.user_active ? 'text-green-600' : 'text-red-500'}>
                         {user.user_active ? 'Đang hoạt động' : 'Ngừng hoạt động'}

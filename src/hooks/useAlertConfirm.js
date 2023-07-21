@@ -9,6 +9,7 @@ export const handleAlertConfirm = ({
   cancelText,
   handleConfirmed,
   showCancelButton,
+  cancelButtonColor,
   confirmButtonColor
 }) => {
   Swal.fire({
@@ -19,7 +20,8 @@ export const handleAlertConfirm = ({
     confirmButtonText: confirmText || 'Xác nhận',
     confirmButtonColor: confirmButtonColor || undefined,
     showCancelButton: showCancelButton || false,
-    cancelButtonText: cancelText || 'Huỷ'
+    cancelButtonText: cancelText || 'Huỷ',
+    cancelButtonColor: cancelButtonColor || undefined
   }).then((isConfirm) => {
     if (isConfirm.isConfirmed) {
       if (handleConfirmed) {
