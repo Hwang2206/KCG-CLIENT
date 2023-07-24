@@ -45,7 +45,6 @@ const CardMembership = () => {
   }
 
   const handleExtendBtn = () => {
-    setShowLoader(true)
     try {
       handleAlertConfirm({
         title: 'Xác nhận thanh toán',
@@ -56,6 +55,8 @@ const CardMembership = () => {
         confirmButtonColor: 'green',
         cancelButtonColor: 'red',
         handleConfirmed: () => {
+          setShowLoader(true)
+
           MembershipServices.extendRegister(user.user_id)
             .then(() => {
               setTimeout(() => {
