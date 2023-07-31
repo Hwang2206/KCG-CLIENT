@@ -37,4 +37,15 @@ input[type="number"] {
   z-index: 99999
 }
 
+.hide-on-mobile {
+  display: block; /* Mặc định hiển thị phần tử */
+}
+
+/* Sử dụng Media Queries để ẩn phần tử trên điện thoại di động */
+@media (max-width: 768px) {
+  .hide-on-mobile {
+      display: none; /* Ẩn phần tử trên điện thoại di động */
+  }
+}
+
 
